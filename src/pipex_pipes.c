@@ -6,7 +6,7 @@
 /*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 18:06:56 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/02 20:54:20 by keomalima        ###   ########.fr       */
+/*   Updated: 2025/01/02 21:10:24 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,12 @@ int	first_pipe(t_filed *fd, char **cmd, int pipe_fd[2])
 		return (1);
 	}
 	close(pipe_fd[0]);
-	dup2(fd_in, STDIN_FILENO);
-	dup2(pipe_fd[1], STDOUT_FILENO);
+	if (dup2(fd_in, STDIN_FILENO) == -1 || dup2(pipe_fd[1], STDOUT_FILENO) == -1)
+		return (1);
 	close(pipe_fd[1]);
 	close(fd_in);
-	execve(cmd[0], cmd, fd->env);
+	if (execve(cmd[0], cmd, fd->env) == -1)
+		return (1);
 	return (0);
 }
 
@@ -42,11 +43,12 @@ int	second_pipe(t_filed *fd, char **cmd, int pipe_fd[2])
 		return (1);
 	}
 	close(pipe_fd[1]);
-	dup2(pipe_fd[0], STDIN_FILENO);
-	dup2(fd_out, STDOUT_FILENO);
+	if (dup2(pipe_fd[0], STDIN_FILENO) == -1 || dup2(fd_out, STDOUT_FILENO) == -1)
+		return (1);
 	close(pipe_fd[0]);
 	close(fd_out);
-	execve(cmd[0], cmd, fd->env);
+	if (execve(cmd[0], cmd, fd->env) == -1)
+		return (1);
 	return (0);
 }
 
@@ -60,13 +62,27 @@ int	run(t_filed *fd, int pipe_fd[2], char **path_env)
 	while (i < 2)
 	{
 		cmd = parse_arg(fd->av[i + 2], path_env);
+		if (!cmd)
+			return (1);
 		pid[i] = fork();
 		if (pid[i] == 0)
 		{
 			if (i == 0)
-				first_pipe(fd, cmd, pipe_fd);
+			{
+				if (first_pipe(fd, cmd, pipe_fd) == 1)
+				{
+					free_split(cmd);
+					return (1);
+				}
+			}
 			else
-				second_pipe(fd, cmd, pipe_fd);
+			{
+				if (second_pipe(fd, cmd, pipe_fd) == 1)
+				{
+					free_split(cmd);
+					return (1);
+				}
+			}
 		}
 		free_split(cmd);
 		i++;
