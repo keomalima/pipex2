@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 18:06:56 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/03 16:51:16 by kricci-d         ###   ########.fr       */
+/*   Updated: 2025/01/03 16:54:52 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,4 +122,8 @@ void	pipex(char **av, int ac, char **env)
 			exit_handler("Failed to wait");
 		i++;
 	}
+	i = 0;
+	while (ac - 4 > i)
+		free(pipe_fd[i++]);
+	free(pipe_fd);
 }
