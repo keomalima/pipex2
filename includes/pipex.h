@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 11:57:04 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/03 13:45:01 by kricci-d         ###   ########.fr       */
+/*   Updated: 2025/01/03 15:25:17 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <sys/wait.h>
 # include "../libft/includes/libft.h"
 
-void	pipex(char **av, char **env);
+void	pipex(char **av, int ac, char **env);
 void	exit_handler(const char *err_msg);
 char	*ft_join_path(const char *s1, const char *s2);
 void	free_split(char **arr);
