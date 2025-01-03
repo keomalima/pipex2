@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 18:01:41 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/03 14:21:59 by kricci-d         ###   ########.fr       */
+/*   Updated: 2025/01/03 16:46:19 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,19 @@ char	*ft_join_path(const char *s1, const char *s2)
 	return (str);
 }
 
-void	close_fds(int fd[2])
+void	close_fds(int ac, int **fd)
 {
-	close(fd[0]);
-	close(fd[1]);
+	int	i;
+
+	i = 0;
+	while (ac - 4 > i)
+	{
+		if (fd[i][0] > 0)
+			close(fd[i][0]);
+		if (fd[i][1] > 0)
+			close(fd[i][1]);
+		i++;
+	}
 }
 
 void	free_split(char **arr)
