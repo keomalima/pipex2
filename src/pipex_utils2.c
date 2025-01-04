@@ -6,7 +6,7 @@
 /*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 12:28:08 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/04 12:58:08 by keomalima        ###   ########.fr       */
+/*   Updated: 2025/01/04 13:27:45 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,17 @@ void	open_pipes(t_args *args)
 	while (args->pipe_count > i)
 	{
 		if (pipe(args->pipe_fd[i]) == -1)
+		{
+			while (i > 0)
+			{
+				close(args->pipe_fd[i - 1][0]);
+				args->pipe_fd[i - 1][0] = -1;
+				close(args->pipe_fd[i - 1][1]);
+				args->pipe_fd[i - 1][1] = -1;
+				i--;
+			}
 			exit_handler(args, "Failed to open pipes");
+		}
 		i++;
 	}
 }
@@ -57,27 +67,31 @@ void	free_pipe_fds(t_args *args)
 
 	if (!args->pipe_fd)
 		return ;
+	close_fds(args);
 	i = 0;
 	while (args->pipe_count > i)
 		free(args->pipe_fd[i++]);
 	free(args->pipe_fd);
+	args->pipe_fd = NULL;
 }
 
-void	close_fds(t_args *args, int fd_in, int fd_out, int index)
+void	close_fds(t_args *args)
 {
 	int	i;
 
 	i = 0;
-	if (index == 0 && fd_in > 0)
-		close(fd_in);
-	if (index == args->pipe_count && fd_out > 0)
-		close(fd_out);
-	while (args->pipe_count > i)
+	while (i < args->pipe_count)
 	{
-		if (args->pipe_fd[i][0] > 0)
+		if (args->pipe_fd[i][0] >= 0)
+		{
 			close(args->pipe_fd[i][0]);
-		if (args->pipe_fd[i][1] > 0)
+			args->pipe_fd[i][0] = -1;
+		}
+		if (args->pipe_fd[i][1] >= 0)
+		{
 			close(args->pipe_fd[i][1]);
+			args->pipe_fd[i][1] = -1;
+		}
 		i++;
 	}
 }

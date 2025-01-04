@@ -6,7 +6,7 @@
 /*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 11:57:42 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/04 12:48:07 by keomalima        ###   ########.fr       */
+/*   Updated: 2025/01/04 13:19:07 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int ac, char **av, char **env)
 	}
 	else
 	{
-		if (ac > 6)
+		if (ac > 8)
 			ft_printf("Error: Too many arguments\n");
 		else
 			ft_printf("Error: Too few arguments\n");

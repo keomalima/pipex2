@@ -6,7 +6,7 @@
 /*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 11:57:04 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/04 12:56:30 by keomalima        ###   ########.fr       */
+/*   Updated: 2025/01/04 13:08:13 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,6 @@ void	free_split(char **arr);
 void	free_pipe_fds(t_args *args);
 char	**parse_arg(t_args *args, char *arg);
 char	**parse_path_env(char **path_env);
-void	close_fds(t_args *args, int fd_in, int fd_out, int i);
+void	close_fds(t_args *args);
 
 #endif
