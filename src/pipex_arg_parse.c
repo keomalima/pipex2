@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_arg_parse.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 18:03:20 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/03 14:23:22 by kricci-d         ###   ########.fr       */
+/*   Updated: 2025/01/04 12:23:33 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,20 @@ char	*get_exec_path(char **env, char *cmd)
 	return (NULL);
 }
 
-char	**parse_arg(char *args, char **env)
+char	**parse_arg(t_args *args, char *arg)
 {
 	char	*exec_path;
 	char	**cmd;
 
-	cmd = ft_split(args, 32);
+	cmd = ft_split(arg, 32);
 	if (!cmd)
-		exit_handler("Failed to split cmd args string\n");
-	exec_path = get_exec_path(env, cmd[0]);
+		exit_handler(args, "Failed to split cmd args string\n");
+	exec_path = get_exec_path(args->env, cmd[0]);
 	if (!exec_path)
 	{
 		printf("Command not found: %s\n", cmd[0]);
 		free_split(cmd);
-		exit_handler("");
+		exit_handler(args, "");
 	}
 	free(cmd[0]);
 	cmd[0] = exec_path;

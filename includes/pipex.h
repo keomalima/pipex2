@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 11:57:04 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/03 16:32:41 by kricci-d         ###   ########.fr       */
+/*   Updated: 2025/01/04 12:56:30 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,24 @@
 # include <sys/wait.h>
 # include "../libft/includes/libft.h"
 
-void	pipex(char **av, int ac, char **env);
-void	exit_handler(const char *err_msg);
+typedef struct s_args
+{
+	int		cmd_count;
+	int		pipe_count;
+	char	**av;
+	char	**env;
+	char	**cmd;
+	int		**pipe_fd;
+}				t_args;
+
+void	pipex(t_args *args);
+void	exit_handler(t_args *args, const char *err_msg);
 char	*ft_join_path(const char *s1, const char *s2);
+void	malloc_n_open_pipes(t_args *args);
 void	free_split(char **arr);
-char	**parse_arg(char *arg, char **path);
+void	free_pipe_fds(t_args *args);
+char	**parse_arg(t_args *args, char *arg);
 char	**parse_path_env(char **path_env);
-void	close_fds(int ac, int **fd);
-void	wait_children(int pid);
+void	close_fds(t_args *args, int fd_in, int fd_out, int i);
 
 #endif
