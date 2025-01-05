@@ -5,29 +5,55 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/01 11:57:42 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/05 12:06:45 by keomalima        ###   ########.fr       */
+/*   Created: 2025/01/01 18:06:56 by keomalima         #+#    #+#             */
+/*   Updated: 2025/01/05 15:56:32 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-int	main(int ac, char **av, char **env)
+void	switch_io(t_args *args, int fd[2])
 {
-	t_args	args;
+	int	dup_1;
+	int	dup_2;
 
-	if (ac > 4 && env)
+	dup_1 = dup2(fd[0], STDIN_FILENO);
+	dup_2 = dup2(fd[1], STDOUT_FILENO);
+	if (dup_1 == -1 || dup_2 == -1)
 	{
-		initialize_variables(ac, av, env, &args);
-		pipex(&args);
+		close(fd[0]);
+		close(fd[1]);
+		exit_handler(args, 1);
 	}
-	else
+	close(fd[0]);
+	close(fd[1]);
+}
+
+void	pipex(t_args *args)
+{
+	int	i;
+	int	fd[2];
+	int	pid;
+
+	malloc_n_open_pipes(args);
+	i = 0;
+	while (args->cmd_count > i)
 	{
-		if (ac > 8)
-			ft_printf("Error: Too many arguments\n");
-		else
-			ft_printf("Error: Too few arguments\n");
-		return (1);
+		pid = fork();
+		if (pid < 0)
+			exit_handler(args, 1);
+		if (pid == 0)
+		{
+			setup_pipes_fds(args, fd, i);
+			args->cmd = parse_arg(args, args->av[i + 2]);
+			switch_io(args, fd);
+			close_fds(args);
+			if (execve(args->cmd[0], args->cmd, args->env) == -1)
+				exit_handler(args, 1);
+		}
+		i++;
 	}
-	return (0);
+	close_fds(args);
+	wait_children(args);
+	free_pipe_fds(args);
 }

@@ -6,11 +6,21 @@
 /*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 18:01:41 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/05 13:11:38 by keomalima        ###   ########.fr       */
+/*   Updated: 2025/01/05 16:01:18 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
+
+void	initialize_variables(int ac, char **av, char **env, t_args *args)
+{
+		args->cmd_count = ac - 3;
+		args->pipe_count = ac - 4;
+		args->av = av;
+		args->env = env;
+		args->cmd = NULL;
+		args->pipe_fd = NULL;
+}
 
 char	*ft_join_path(const char *s1, const char *s2)
 {
@@ -62,16 +72,7 @@ void	free_split(char **arr)
 	while (arr[i])
 		free(arr[i++]);
 	free(arr);
-}
-
-void	initialize_variables(int ac, char **av, char **env, t_args *args)
-{
-		args->cmd_count = ac - 3;
-		args->pipe_count = ac - 4;
-		args->av = av;
-		args->env = env;
-		args->cmd = NULL;
-		args->pipe_fd = NULL;
+	arr = NULL;
 }
 
 void	exit_handler(t_args *args, int err_code)

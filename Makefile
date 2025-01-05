@@ -6,7 +6,7 @@
 #    By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/01 11:56:39 by keomalima         #+#    #+#              #
-#    Updated: 2025/01/04 12:28:32 by keomalima        ###   ########.fr        #
+#    Updated: 2025/01/05 15:32:20 by keomalima        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,8 @@ OBJDIR := objects
 LIBFTDIR := libft
 LIBSRCS := $(LIBFTDIR)/src
 
-SRCS := $(SRCSDIR)/pipex.c  $(SRCSDIR)/pipex_pipes.c  $(SRCSDIR)/pipex_utils.c \
-		 $(SRCSDIR)/pipex_arg_parse.c $(SRCSDIR)/pipex_utils2.c
+SRCS := $(SRCSDIR)/main.c $(SRCSDIR)/pipex.c $(SRCSDIR)/pipex_utils.c \
+		$(SRCSDIR)/pipex_arg_parse.c $(SRCSDIR)/pipex_utils2.c
 OBJS := $(SRCS:$(SRCSDIR)/%.c=$(OBJDIR)/%.o)
 
 LIBFT_SRCS := $(LIBSRCS)/ft_atoi.c $(LIBSRCS)/ft_bzero.c $(LIBSRCS)/ft_calloc.c \

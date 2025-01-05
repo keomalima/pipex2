@@ -6,7 +6,7 @@
 /*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 12:28:08 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/05 13:12:28 by keomalima        ###   ########.fr       */
+/*   Updated: 2025/01/05 15:52:35 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	malloc_n_open_pipes(t_args *args)
 				i--;
 			}
 			free(args->pipe_fd);
+			args->pipe_fd = NULL;
 			exit_handler(args, 12);
 		}
 		i++;
