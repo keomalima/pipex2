@@ -6,7 +6,7 @@
 /*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 11:57:04 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/05 12:23:40 by keomalima        ###   ########.fr       */
+/*   Updated: 2025/01/05 16:15:32 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,5 @@ void	free_split(char **arr);
 void	free_pipe_fds(t_args *args);
 void	close_fds(t_args *args);
 void	exit_handler(t_args *args, int err_code);
-
 
 #endif

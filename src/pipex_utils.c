@@ -6,7 +6,7 @@
 /*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 18:01:41 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/05 16:01:18 by keomalima        ###   ########.fr       */
+/*   Updated: 2025/01/05 16:15:16 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	initialize_variables(int ac, char **av, char **env, t_args *args)
 {
-		args->cmd_count = ac - 3;
-		args->pipe_count = ac - 4;
-		args->av = av;
-		args->env = env;
-		args->cmd = NULL;
-		args->pipe_fd = NULL;
+	args->cmd_count = ac - 3;
+	args->pipe_count = ac - 4;
+	args->av = av;
+	args->env = env;
+	args->cmd = NULL;
+	args->pipe_fd = NULL;
 }
 
 char	*ft_join_path(const char *s1, const char *s2)
@@ -84,7 +84,7 @@ void	exit_handler(t_args *args, int err_code)
 	if (err_code == 0)
 		errno = 0;
 	if (err_code == 12)
-		errno =  ENOMEM;
+		errno = ENOMEM;
 	if (errno)
 		perror("Error");
 	exit(EXIT_FAILURE);

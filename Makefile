@@ -6,11 +6,12 @@
 #    By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/01 11:56:39 by keomalima         #+#    #+#              #
-#    Updated: 2025/01/05 15:32:20 by keomalima        ###   ########.fr        #
+#    Updated: 2025/01/05 16:55:09 by keomalima        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
+BONUS = pipex_bonus
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror -Iincludes -I$(LIBFTDIR)/includes
@@ -25,6 +26,9 @@ LIBSRCS := $(LIBFTDIR)/src
 SRCS := $(SRCSDIR)/main.c $(SRCSDIR)/pipex.c $(SRCSDIR)/pipex_utils.c \
 		$(SRCSDIR)/pipex_arg_parse.c $(SRCSDIR)/pipex_utils2.c
 OBJS := $(SRCS:$(SRCSDIR)/%.c=$(OBJDIR)/%.o)
+
+SRCS_BONUS = $(SRCSDIR)/main_bonus.c
+OBJS_BONUS := $(SRCS_BONUS:$(SRCSDIR)/%.c=$(OBJDIR)/%.o)
 
 LIBFT_SRCS := $(LIBSRCS)/ft_atoi.c $(LIBSRCS)/ft_bzero.c $(LIBSRCS)/ft_calloc.c \
 			$(LIBSRCS)/ft_isalnum.c $(LIBSRCS)/ft_isalpha.c $(LIBSRCS)/ft_isascii.c \
@@ -51,12 +55,17 @@ LIBFT_SRCS := $(LIBSRCS)/ft_atoi.c $(LIBSRCS)/ft_bzero.c $(LIBSRCS)/ft_calloc.c 
 LIBFT_HEADERS := $(LIBFTDIR)/includes/libft.h
 LIBFT := $(LIBFTDIR)/libft.a
 
-HEADERS := includes/pipex.h $(LIBFT_HEADERS)
+HEADERS := includes/pipex.h includes/pipex_bonus.h $(LIBFT_HEADERS)
 
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+
+bonus: $(BONUS)
+
+$(BONUS): $(LIBFT) $(OBJS_BONUS)
+	$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIBFT) -o $(BONUS)
 
 $(OBJDIR)/%.o: $(SRCSDIR)/%.c $(HEADERS) Makefile | $(OBJDIR)
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -72,10 +81,10 @@ clean:
 	$(MAKE) -C $(LIBFTDIR) clean
 
 fclean: clean
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(BONUS)
 	$(MAKE) -C $(LIBFTDIR) fclean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus
 

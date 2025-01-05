@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/01 11:57:42 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/05 16:14:03 by keomalima        ###   ########.fr       */
+/*   Created: 2025/01/01 11:57:04 by keomalima         #+#    #+#             */
+/*   Updated: 2025/01/05 16:25:35 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#ifndef PIPEX_H
+# define PIPEX_H
 
-int	main(int ac, char **av, char **env)
+# include <stdlib.h>
+# include <unistd.h>
+# include <string.h>
+# include <stdio.h>
+# include <fcntl.h>
+# include <errno.h>
+# include <sys/wait.h>
+# include "../libft/includes/libft.h"
+
+typedef struct s_args
 {
-	t_args	args;
+	int		cmd_count;
+	int		pipe_count;
+	char	**av;
+	char	**env;
+	char	**cmd;
+	int		**pipe_fd;
+}				t_args;
 
-	if (ac == 5 && env)
-	{
-		initialize_variables(ac, av, env, &args);
-		pipex(&args);
-	}
-	else
-	{
-		if (ac > 5)
-			ft_printf("Error: Too many arguments\n");
-		else
-			ft_printf("Error: Too few arguments\n");
-		return (1);
-	}
-	return (0);
-}
+#endif
