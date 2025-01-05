@@ -6,7 +6,7 @@
 #    By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/01 11:56:39 by keomalima         #+#    #+#              #
-#    Updated: 2025/01/05 17:05:56 by keomalima        ###   ########.fr        #
+#    Updated: 2025/01/05 17:52:30 by keomalima        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,9 +27,10 @@ SRCS := $(SRCSDIR)/main.c $(SRCSDIR)/pipex.c $(SRCSDIR)/pipex_utils.c \
 		$(SRCSDIR)/pipex_arg_parse.c $(SRCSDIR)/pipex_utils2.c
 OBJS := $(SRCS:$(SRCSDIR)/%.c=$(OBJDIR)/%.o)
 
-SRCS_BONUS = $(SRCSDIR)/main_bonus.c $(SRCSDIR)/pipex_bonus.c $(SRCSDIR)/pipex_utils_bonus.c \
-		$(SRCSDIR)/pipex_arg_parse_bonus.c $(SRCSDIR)/pipex_utils2_bonus.c $(SRCSDIR)/here_doc_bonus.c
-OBJS_BONUS := $(SRCS_BONUS:$(SRCSDIR)/%.c=$(OBJDIR)/%.o)
+BONUSSRCSDIR := src/bonus
+SRCS_BONUS = $(BONUSSRCSDIR)/main_bonus.c $(BONUSSRCSDIR)/pipex_bonus.c $(BONUSSRCSDIR)/pipex_utils_bonus.c \
+		$(BONUSSRCSDIR)/pipex_arg_parse_bonus.c $(BONUSSRCSDIR)/pipex_utils2_bonus.c $(BONUSSRCSDIR)/here_doc_bonus.c
+OBJS_BONUS := $(SRCS_BONUS:$(BONUSSRCSDIR)/%.c=$(OBJDIR)/%.o)
 
 LIBFT_SRCS := $(LIBSRCS)/ft_atoi.c $(LIBSRCS)/ft_bzero.c $(LIBSRCS)/ft_calloc.c \
 			$(LIBSRCS)/ft_isalnum.c $(LIBSRCS)/ft_isalpha.c $(LIBSRCS)/ft_isascii.c \
@@ -69,6 +70,9 @@ $(BONUS): $(LIBFT) $(OBJS_BONUS)
 	$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIBFT) -o $(BONUS)
 
 $(OBJDIR)/%.o: $(SRCSDIR)/%.c $(HEADERS) Makefile | $(OBJDIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJDIR)/%.o: $(BONUSSRCSDIR)/%.c $(HEADERS) Makefile | $(OBJDIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJDIR):
