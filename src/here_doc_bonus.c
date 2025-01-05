@@ -6,9 +6,14 @@
 /*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 16:34:26 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/05 16:34:37 by keomalima        ###   ########.fr       */
+/*   Updated: 2025/01/05 17:09:59 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex_bonus.h"
 
+void	here_doc(t_args *args)
+{
+	(void)args;
+
+}
