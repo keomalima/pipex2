@@ -6,7 +6,7 @@
 /*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 11:57:42 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/04 13:19:07 by keomalima        ###   ########.fr       */
+/*   Updated: 2025/01/05 12:06:45 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,7 @@ int	main(int ac, char **av, char **env)
 
 	if (ac > 4 && env)
 	{
-		args.cmd_count = ac - 3;
-		args.pipe_count = ac - 4;
-		args.av = av;
-		args.env = env;
-		args.cmd = NULL;
-		args.pipe_fd = NULL;
+		initialize_variables(ac, av, env, &args);
 		pipex(&args);
 	}
 	else

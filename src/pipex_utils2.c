@@ -6,11 +6,33 @@
 /*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 12:28:08 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/04 13:27:45 by keomalima        ###   ########.fr       */
+/*   Updated: 2025/01/05 13:12:28 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	setup_pipes_fds(t_args *args, int fd[2], int i)
+{
+	if (i == 0)
+		fd[0] = open(args->av[1], O_RDONLY);
+	else
+		fd[0] = args->pipe_fd[i - 1][0];
+	if (i == args->pipe_count)
+		fd[1] = open(args->av[args->cmd_count + 2],
+				O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else
+		fd[1] = args->pipe_fd[i][1];
+	if (fd[0] < 0 || fd[1] < 0)
+	{
+		if (fd[0] < 0)
+			ft_printf("no such file or directory: %s\n", args->av[1]);
+		if (fd[1] < 0)
+			ft_printf("permission denied: %s\n",
+				args->av[args->cmd_count + 2]);
+		exit_handler(args, 0);
+	}
+}
 
 void	open_pipes(t_args *args)
 {
@@ -29,7 +51,7 @@ void	open_pipes(t_args *args)
 				args->pipe_fd[i - 1][1] = -1;
 				i--;
 			}
-			exit_handler(args, "Failed to open pipes");
+			exit_handler(args, 1);
 		}
 		i++;
 	}
@@ -41,7 +63,7 @@ void	malloc_n_open_pipes(t_args *args)
 
 	args->pipe_fd = malloc(sizeof(int *) * (args->pipe_count));
 	if (!args->pipe_fd)
-		exit_handler(args, "Failed to malloc pipes");
+		exit_handler(args, 12);
 	i = 0;
 	while (args->pipe_count > i)
 	{
@@ -54,7 +76,7 @@ void	malloc_n_open_pipes(t_args *args)
 				i--;
 			}
 			free(args->pipe_fd);
-			exit_handler(args, "Failed to malloc pipes");
+			exit_handler(args, 12);
 		}
 		i++;
 	}

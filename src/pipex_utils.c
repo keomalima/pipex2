@@ -6,7 +6,7 @@
 /*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 18:01:41 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/04 13:07:44 by keomalima        ###   ########.fr       */
+/*   Updated: 2025/01/05 13:11:38 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,20 @@ char	*ft_join_path(const char *s1, const char *s2)
 	return (str);
 }
 
+void	wait_children(t_args *args)
+{
+	int	i;
+	int	status;
+
+	i = 0;
+	while (args->cmd_count > i)
+	{
+		if (waitpid(-1, &status, 0) < 0)
+			exit_handler(args, 1);
+		i++;
+	}
+}
+
 void	free_split(char **arr)
 {
 	int	i;
@@ -50,15 +64,27 @@ void	free_split(char **arr)
 	free(arr);
 }
 
-void	exit_handler(t_args *args, const char *err_msg)
+void	initialize_variables(int ac, char **av, char **env, t_args *args)
+{
+		args->cmd_count = ac - 3;
+		args->pipe_count = ac - 4;
+		args->av = av;
+		args->env = env;
+		args->cmd = NULL;
+		args->pipe_fd = NULL;
+}
+
+void	exit_handler(t_args *args, int err_code)
 {
 	if (args->cmd)
 		free_split(args->cmd);
 	if (args->pipe_fd)
 		free_pipe_fds(args);
-	if (!err_msg)
-		ft_printf("%s\n", err_msg);
-	else
-		ft_printf("%s: %s\n", strerror(errno), err_msg);
+	if (err_code == 0)
+		errno = 0;
+	if (err_code == 12)
+		errno =  ENOMEM;
+	if (errno)
+		perror("Error");
 	exit(EXIT_FAILURE);
 }

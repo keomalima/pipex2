@@ -6,7 +6,7 @@
 /*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 18:03:20 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/04 12:23:33 by keomalima        ###   ########.fr       */
+/*   Updated: 2025/01/05 11:48:39 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ char	**parse_arg(t_args *args, char *arg)
 
 	cmd = ft_split(arg, 32);
 	if (!cmd)
-		exit_handler(args, "Failed to split cmd args string\n");
+		exit_handler(args, 12);
 	exec_path = get_exec_path(args->env, cmd[0]);
 	if (!exec_path)
 	{
-		printf("Command not found: %s\n", cmd[0]);
+		ft_printf("Command not found: %s\n", cmd[0]);
 		free_split(cmd);
-		exit_handler(args, "");
+		exit_handler(args, 0);
 	}
 	free(cmd[0]);
 	cmd[0] = exec_path;

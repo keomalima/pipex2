@@ -6,7 +6,7 @@
 /*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 11:57:04 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/04 13:08:13 by keomalima        ###   ########.fr       */
+/*   Updated: 2025/01/05 12:23:40 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,16 @@ typedef struct s_args
 }				t_args;
 
 void	pipex(t_args *args);
-void	exit_handler(t_args *args, const char *err_msg);
+void	initialize_variables(int ac, char **av, char **env, t_args *args);
+char	**parse_arg(t_args *args, char *arg);
 char	*ft_join_path(const char *s1, const char *s2);
 void	malloc_n_open_pipes(t_args *args);
+void	setup_pipes_fds(t_args *args, int fd[2], int i);
+void	wait_children(t_args *args);
 void	free_split(char **arr);
 void	free_pipe_fds(t_args *args);
-char	**parse_arg(t_args *args, char *arg);
-char	**parse_path_env(char **path_env);
 void	close_fds(t_args *args);
+void	exit_handler(t_args *args, int err_code);
+
 
 #endif
