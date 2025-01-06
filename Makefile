@@ -6,7 +6,7 @@
 #    By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/01 11:56:39 by keomalima         #+#    #+#              #
-#    Updated: 2025/01/06 12:22:01 by kricci-d         ###   ########.fr        #
+#    Updated: 2025/01/06 12:25:02 by kricci-d         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,7 @@ OBJDIR := objects
 LIBFTDIR := libft
 LIBSRCS := $(LIBFTDIR)/src
 
-SRCS := $(SRCSDIR)/main.c $(SRCSDIR)/pipex.c $(SRCSDIR)/pipex_utils.c \
-		$(SRCSDIR)/pipex_arg_parse.c 
+SRCS := $(SRCSDIR)/main.c $(SRCSDIR)/pipex.c $(SRCSDIR)/pipex_utils.c $(SRCSDIR)/pipex_arg_parse.c
 OBJS := $(SRCS:$(SRCSDIR)/%.c=$(OBJDIR)/%.o)
 
 BONUSSRCSDIR := src/bonus

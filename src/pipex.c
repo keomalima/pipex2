@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 18:06:56 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/06 12:21:32 by kricci-d         ###   ########.fr       */
+/*   Updated: 2025/01/06 13:10:43 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	setup_pipes_fds(t_args *args, int fd[2], int i, int pipe_fd[2][2])
 	if (i == 0)
 		fd[0] = open(args->av[1], O_RDONLY);
 	else
-		fd[0] = pipe_fd[i % 1][0];
+		fd[0] = pipe_fd[i % 2 == 0][0];
 	if (i == args->pipe_count)
 		fd[1] = open(args->av[args->cmd_count + 2],
 				O_WRONLY | O_CREAT | O_TRUNC, 0644);
