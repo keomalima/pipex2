@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 11:57:42 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/05 16:14:03 by keomalima        ###   ########.fr       */
+/*   Updated: 2025/01/06 12:22:28 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	main(int ac, char **av, char **env)
 {
 	t_args	args;
 
-	if (ac == 5 && env)
+	if (ac > 4 && env)
 	{
 		initialize_variables(ac, av, env, &args);
 		pipex(&args);

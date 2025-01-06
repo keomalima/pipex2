@@ -3,14 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_arg_parse.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 18:03:20 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/05 16:05:54 by keomalima        ###   ########.fr       */
+/*   Updated: 2025/01/06 12:20:46 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
+
+char	*ft_join_path(const char *s1, const char *s2)
+{
+	char	*str;
+	int		i;
+	int		j;
+	int		add_slash;
+
+	if (!s1 || !s2)
+		return (NULL);
+	add_slash = (s1[ft_strlen(s1) - 1] != '/');
+	str = malloc(ft_strlen(s1) + ft_strlen(s2) + add_slash + 1);
+	if (!str)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (s1[i])
+		str[j++] = s1[i++];
+	if (add_slash)
+		str[j++] = '/';
+	i = 0;
+	while (s2[i])
+		str[j++] = s2[i++];
+	str[j] = '\0';
+	return (str);
+}
 
 char	**parse_path_env(char **env)
 {
