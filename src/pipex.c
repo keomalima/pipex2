@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 18:06:56 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/06 13:10:43 by kricci-d         ###   ########.fr       */
+/*   Updated: 2025/01/06 16:12:27 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,19 @@ void	wait_children(t_args *args)
 {
 	int	i;
 	int	status;
+	int exit_status;
 
 	i = 0;
 	while (args->cmd_count > i)
 	{
 		if (waitpid(-1, &status, 0) < 0)
 			exit_handler(args, 1);
+		if (WIFEXITED(status))
+			exit_status = WEXITSTATUS(status);
 		i++;
 	}
+	if (exit_status != 0)
+		exit(exit_status);
 }
 
 void	switch_io(t_args *args, int fd[2])
@@ -68,7 +73,7 @@ void	setup_pipes_fds(t_args *args, int fd[2], int i, int pipe_fd[2][2])
 void	pipex(t_args *args)
 {
 	int	i;
-	int	fd[2];
+	int	dup_fd[2];
 	int	pipe_fd[2][2];
 	int	pid;
 
@@ -81,9 +86,9 @@ void	pipex(t_args *args)
 			exit_handler(args, 1);
 		if (pid == 0)
 		{
-			setup_pipes_fds(args, fd, i, pipe_fd);
+			setup_pipes_fds(args, dup_fd, i, pipe_fd);
 			args->cmd = parse_arg(args, args->av[i + 2]);
-			switch_io(args, fd);
+			switch_io(args, dup_fd);
 			close_fds(pipe_fd);
 			if (execve(args->cmd[0], args->cmd, args->env) == -1)
 				exit_handler(args, 1);
