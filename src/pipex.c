@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 18:06:56 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/06 16:12:27 by kricci-d         ###   ########.fr       */
+/*   Updated: 2025/01/07 11:01:33 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,24 @@ void	wait_children(t_args *args)
 {
 	int	i;
 	int	status;
-	int exit_status;
+	int	exit_status;
+	int	child_exit_status;
 
 	i = 0;
+	exit_status = 0;
 	while (args->cmd_count > i)
 	{
 		if (waitpid(-1, &status, 0) < 0)
 			exit_handler(args, 1);
 		if (WIFEXITED(status))
-			exit_status = WEXITSTATUS(status);
+		{
+			child_exit_status = WEXITSTATUS(status);
+			if (child_exit_status != 0)
+				exit_status = child_exit_status;
+		}
 		i++;
 	}
-	if (exit_status != 0)
-		exit(exit_status);
+	exit(exit_status);
 }
 
 void	switch_io(t_args *args, int fd[2])
@@ -54,7 +59,7 @@ void	setup_pipes_fds(t_args *args, int fd[2], int i, int pipe_fd[2][2])
 		fd[0] = open(args->av[1], O_RDONLY);
 	else
 		fd[0] = pipe_fd[i % 2 == 0][0];
-	if (i == args->pipe_count)
+	if (i == args->cmd_count - 1)
 		fd[1] = open(args->av[args->cmd_count + 2],
 				O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else

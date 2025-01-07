@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 18:01:41 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/05 17:02:37 by keomalima        ###   ########.fr       */
+/*   Updated: 2025/01/07 10:56:07 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,52 +14,32 @@
 
 void	initialize_variables(int ac, char **av, char **env, t_args *args)
 {
-	args->cmd_count = ac - 3;
-	args->pipe_count = ac - 4;
+	args->here_doc = ft_strncmp(av[1], "here_doc", 8) == 0;
+	args->cmd_count = ac - 3 - args->here_doc;
+	args->ac = ac;
 	args->av = av;
 	args->env = env;
 	args->cmd = NULL;
-	args->pipe_fd = NULL;
 }
 
-char	*ft_join_path(const char *s1, const char *s2)
+void	open_pipes(t_args *args, int pipe_fd[2][2])
 {
-	char	*str;
-	int		i;
-	int		j;
-	int		add_slash;
-
-	if (!s1 || !s2)
-		return (NULL);
-	add_slash = (s1[ft_strlen(s1) - 1] != '/');
-	str = malloc(ft_strlen(s1) + ft_strlen(s2) + add_slash + 1);
-	if (!str)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (s1[i])
-		str[j++] = s1[i++];
-	if (add_slash)
-		str[j++] = '/';
-	i = 0;
-	while (s2[i])
-		str[j++] = s2[i++];
-	str[j] = '\0';
-	return (str);
+	if (pipe(pipe_fd[0]) == -1)
+		exit_handler(args, 1);
+	if (pipe(pipe_fd[1]) == -1)
+		exit_handler(args, 1);
 }
 
-void	wait_children(t_args *args)
+void	close_fds(int fd[2][2])
 {
-	int	i;
-	int	status;
-
-	i = 0;
-	while (args->cmd_count > i)
-	{
-		if (waitpid(-1, &status, 0) < 0)
-			exit_handler(args, 1);
-		i++;
-	}
+	if (fd[0][0] >= 0)
+		close(fd[0][0]);
+	if (fd[0][1] >= 0)
+		close(fd[0][1]);
+	if (fd[1][0] >= 0)
+		close(fd[1][0]);
+	if (fd[1][1] >= 0)
+		close(fd[1][1]);
 }
 
 void	free_split(char **arr)
@@ -79,13 +59,16 @@ void	exit_handler(t_args *args, int err_code)
 {
 	if (args->cmd)
 		free_split(args->cmd);
-	if (args->pipe_fd)
-		free_pipe_fds(args);
 	if (err_code == 0)
+	{
+		err_code = 1;
+		errno = 0;
+	}
+	if (err_code == 127)
 		errno = 0;
 	if (err_code == 12)
 		errno = ENOMEM;
 	if (errno)
 		perror("Error");
-	exit(EXIT_FAILURE);
+	exit(err_code);
 }

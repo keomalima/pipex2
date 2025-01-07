@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+         #
+#    By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/15 14:26:45 by keomalima         #+#    #+#              #
-#    Updated: 2025/01/01 17:44:19 by keomalima        ###   ########.fr        #
+#    Updated: 2025/01/07 10:25:53 by kricci-d         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,8 @@ LIBFT_SRCS := $(LIBSRCS)/ft_atoi.c $(LIBSRCS)/ft_bzero.c $(LIBSRCS)/ft_calloc.c 
 			$(LIBSRCS)/ft_putstr_fd.c $(LIBSRCS)/ft_split.c $(LIBSRCS)/ft_putendl_fd.c \
 			$(LIBSRCS)/ft_striteri.c $(LIBSRCS)/ft_strjoin.c  $(LIBSRCS)/ft_strtrim.c \
 			$(LIBSRCS)/ft_strmapi.c $(LIBSRCS)/ft_printf.c $(LIBSRCS)/ft_print_char.c \
-			$(LIBSRCS)/ft_print_hex.c $(LIBSRCS)/ft_print_int.c $(LIBSRCS)/ft_print_ptr.c
+			$(LIBSRCS)/ft_print_hex.c $(LIBSRCS)/ft_print_int.c $(LIBSRCS)/ft_print_ptr.c \
+			$(LIBSRCS)/get_next_line.c $(LIBSRCS)/get_next_line_utils.c
 
 BONUS_SRCS := $(LIBSRCS)/ft_lstadd_back.c $(LIBSRCS)/ft_lstadd_front.c \
 			$(LIBSRCS)/ft_lstclear.c $(LIBSRCS)/ft_lstdelone.c \

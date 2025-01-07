@@ -6,12 +6,11 @@
 #    By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/01 11:56:39 by keomalima         #+#    #+#              #
-#    Updated: 2025/01/06 12:25:02 by kricci-d         ###   ########.fr        #
+#    Updated: 2025/01/07 09:58:36 by kricci-d         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
-BONUS = pipex_bonus
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror -Iincludes -I$(LIBFTDIR)/includes
@@ -28,7 +27,7 @@ OBJS := $(SRCS:$(SRCSDIR)/%.c=$(OBJDIR)/%.o)
 
 BONUSSRCSDIR := src/bonus
 SRCS_BONUS = $(BONUSSRCSDIR)/main_bonus.c $(BONUSSRCSDIR)/pipex_bonus.c $(BONUSSRCSDIR)/pipex_utils_bonus.c \
-		$(BONUSSRCSDIR)/pipex_arg_parse_bonus.c $(BONUSSRCSDIR)/pipex_utils2_bonus.c $(BONUSSRCSDIR)/here_doc_bonus.c
+		$(BONUSSRCSDIR)/pipex_arg_parse_bonus.c $(BONUSSRCSDIR)/here_doc_bonus.c
 OBJS_BONUS := $(SRCS_BONUS:$(BONUSSRCSDIR)/%.c=$(OBJDIR)/%.o)
 
 LIBFT_SRCS := $(LIBSRCS)/ft_atoi.c $(LIBSRCS)/ft_bzero.c $(LIBSRCS)/ft_calloc.c \
@@ -63,10 +62,10 @@ all: $(NAME)
 $(NAME): $(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
-bonus: $(BONUS)
-
-$(BONUS): $(LIBFT) $(OBJS_BONUS)
-	$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIBFT) -o $(BONUS)
+bonus: $(NAME) $(LIBFT) $(OBJS_BONUS)
+	rm -f $(NAME)
+	rm -rf $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIBFT) -o $(NAME)
 
 $(OBJDIR)/%.o: $(SRCSDIR)/%.c $(HEADERS) Makefile | $(OBJDIR)
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -85,7 +84,7 @@ clean:
 	$(MAKE) -C $(LIBFTDIR) clean
 
 fclean: clean
-	$(RM) $(NAME) $(BONUS)
+	$(RM) $(NAME)
 	$(MAKE) -C $(LIBFTDIR) fclean
 
 re: fclean all

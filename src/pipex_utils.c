@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 18:01:41 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/06 12:22:33 by kricci-d         ###   ########.fr       */
+/*   Updated: 2025/01/07 10:16:11 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	initialize_variables(int ac, char **av, char **env, t_args *args)
 {
 	args->cmd_count = ac - 3;
-	args->pipe_count = ac - 4;
 	args->av = av;
 	args->env = env;
 	args->cmd = NULL;
@@ -59,10 +58,15 @@ void	exit_handler(t_args *args, int err_code)
 	if (args->cmd)
 		free_split(args->cmd);
 	if (err_code == 0)
+	{
+		err_code = 1;
+		errno = 0;
+	}
+	if (err_code == 127)
 		errno = 0;
 	if (err_code == 12)
 		errno = ENOMEM;
 	if (errno)
 		perror("Error");
-	exit(EXIT_FAILURE);
+	exit(err_code);
 }

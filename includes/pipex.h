@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 11:57:04 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/06 12:22:43 by kricci-d         ###   ########.fr       */
+/*   Updated: 2025/01/07 10:16:03 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 typedef struct s_args
 {
 	int		cmd_count;
-	int		pipe_count;
 	char	**av;
 	char	**env;
 	char	**cmd;

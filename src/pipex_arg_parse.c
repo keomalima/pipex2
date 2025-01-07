@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 18:03:20 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/06 12:20:46 by kricci-d         ###   ########.fr       */
+/*   Updated: 2025/01/07 09:37:53 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	**parse_arg(t_args *args, char *arg)
 	{
 		ft_printf("Command not found: %s\n", cmd[0]);
 		free_split(cmd);
-		exit_handler(args, 0);
+		exit_handler(args, 127);
 	}
 	free(cmd[0]);
 	cmd[0] = exec_path;
