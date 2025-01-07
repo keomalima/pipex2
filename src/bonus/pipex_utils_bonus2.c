@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils_bonus2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 11:39:27 by kricci-d          #+#    #+#             */
-/*   Updated: 2025/01/07 16:33:23 by kricci-d         ###   ########.fr       */
+/*   Updated: 2025/01/07 18:30:21 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,67 @@ static	void	free_tab(char **tab, int index)
 	free(tab);
 }
 
+static int calculate_token_length(const char **s, char c, int *in_quotes)
+{
+	int	str_len;
+
+	str_len = 0;
+	*in_quotes = 0;
+	while (**s && !is_delimiter(**s, c, in_quotes))
+	{
+		if (**s != '\'' && **s != '"')
+			str_len++;
+		else if (*(*s + 1) == **s)
+		{
+			str_len++;
+			(*s)++;
+		}
+		(*s)++;
+	}
+	return str_len;
+}
+
+static char *extract_token(const char *start, const char *end)
+{
+	char	*str;
+	int		str_len;
+
+	str_len = 0;
+	str = malloc(sizeof(char) * (end - start + 1));
+	if (!str)
+		return NULL;
+	while (start < end)
+	{
+		if (*start != '\'' && *start != '"')
+			str[str_len++] = *start;
+		else if (*(start + 1) == *start)
+		{
+			str[str_len++] = ' ';
+			start++;
+		}
+	}
+	start++;
+	str[str_len] = '\0';
+	return str;
+}
+
+// Main function: combines both parts
+static char *get_str(const char **s, char c)
+{
+	const char	*start;
+	int	in_quotes;
+	int	str_len;
+
+	in_quotes = 0;
+	while (**s && is_delimiter(**s, c, &in_quotes))
+		(*s)++;
+	start = *s;
+	str_len = calculate_token_length(s, c, &in_quotes);
+	if (str_len == 0)
+		return NULL;
+	return extract_token(start, *s);
+}
+
 static char	*get_str(const char **s, char c)
 {
 	int			str_len;
@@ -68,9 +129,20 @@ static char	*get_str(const char **s, char c)
 	str_len = 0;
 	start = *s;
 	in_quotes = 0;
+	while (*s && is_delimiter(*s, c, &in_quotes))
+		s++;
+	in_quotes = 0;
 	while (**s && !is_delimiter(**s, c, &in_quotes))
-		if (*(*s)++ != '\'' && *start != '"')
+	{
+		if (**s != '\'' && **s != '"')
 			str_len++;
+		else
+		{
+			if ((*start) + 1 == '\'' || (*start) + 1 == '"')
+				str_len++;
+		}
+		(*s)++;
+	}
 	str = malloc(sizeof(char) * str_len + 1);
 	if (!str)
 		return (NULL);
@@ -79,6 +151,11 @@ static char	*get_str(const char **s, char c)
 	{
 		if (*start != '\'' && *start != '"')
 			str[str_len++] = *start;
+		else
+		{
+			if ((*start) + 1 == '\'' || (*start) + 1 == '"')
+				str[str_len++] = ' ';
+		}
 		start++;
 	}
 	str[str_len] = '\0';
@@ -90,11 +167,9 @@ char	**ft_pipex_split(char const *s, char c)
 	char	**tab;
 	int		i;
 	int		words;
-	int		in_quotes;
 
 	if (!s)
 		return (NULL);
-	in_quotes = 0;
 	words = tab_len(s, c);
 	tab = malloc(sizeof(char *) * (words + 1));
 	if (!tab)
@@ -102,8 +177,6 @@ char	**ft_pipex_split(char const *s, char c)
 	i = 0;
 	while (i < words)
 	{
-		while (*s && is_delimiter(*s, c, &in_quotes))
-			s++;
 		tab[i] = get_str(&s, c);
 		if (!tab[i])
 			return (free_tab(tab, i), NULL);
