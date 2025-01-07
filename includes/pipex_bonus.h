@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 11:57:04 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/07 10:55:49 by kricci-d         ###   ########.fr       */
+/*   Updated: 2025/01/07 11:40:05 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ void	initialize_variables(int ac, char **av, char **env, t_args *args);
 void	close_fds(int pipe_fd[2][2]);
 void	free_split(char **arr);
 void	exit_handler(t_args *args, int err_code);
+char	**ft_pipex_split(char const *s, char c);
 
 #endif

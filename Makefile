@@ -6,7 +6,7 @@
 #    By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/01 11:56:39 by keomalima         #+#    #+#              #
-#    Updated: 2025/01/07 09:58:36 by kricci-d         ###   ########.fr        #
+#    Updated: 2025/01/07 11:40:32 by kricci-d         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ OBJS := $(SRCS:$(SRCSDIR)/%.c=$(OBJDIR)/%.o)
 
 BONUSSRCSDIR := src/bonus
 SRCS_BONUS = $(BONUSSRCSDIR)/main_bonus.c $(BONUSSRCSDIR)/pipex_bonus.c $(BONUSSRCSDIR)/pipex_utils_bonus.c \
-		$(BONUSSRCSDIR)/pipex_arg_parse_bonus.c $(BONUSSRCSDIR)/here_doc_bonus.c
+		$(BONUSSRCSDIR)/pipex_arg_parse_bonus.c $(BONUSSRCSDIR)/pipex_utils_bonus2.c $(BONUSSRCSDIR)/here_doc_bonus.c
 OBJS_BONUS := $(SRCS_BONUS:$(BONUSSRCSDIR)/%.c=$(OBJDIR)/%.o)
 
 LIBFT_SRCS := $(LIBSRCS)/ft_atoi.c $(LIBSRCS)/ft_bzero.c $(LIBSRCS)/ft_calloc.c \
