@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/07 11:39:27 by kricci-d          #+#    #+#             */
-/*   Updated: 2025/01/08 09:00:39 by kricci-d         ###   ########.fr       */
+/*   Created: 2025/01/08 10:02:46 by kricci-d          #+#    #+#             */
+/*   Updated: 2025/01/08 10:03:08 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex_bonus.h"
+#include "../includes/pipex.h"
 
 int	is_delimiter(char c, char delimiter, int *in_quotes)
 {

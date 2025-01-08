@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 11:57:04 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/08 08:44:09 by kricci-d         ###   ########.fr       */
+/*   Updated: 2025/01/08 11:00:45 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_args
 	char	**av;
 	char	**env;
 	char	**cmd;
+	pid_t	*child_pids;
 }				t_args;
 
 void	pipex(t_args *args);

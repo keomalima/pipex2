@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 18:01:41 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/08 08:41:17 by kricci-d         ###   ########.fr       */
+/*   Updated: 2025/01/08 11:18:47 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	exit_handler(t_args *args, int err_code)
 {
 	if (args->cmd)
 		free_split(args->cmd);
+	if (args->child_pids)
+		free(args->child_pids);
 	if (err_code == 0)
 	{
 		err_code = 1;

@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 16:24:02 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/08 08:43:36 by kricci-d         ###   ########.fr       */
+/*   Updated: 2025/01/08 11:33:39 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	initialize_variables(int ac, char **av, char **env, t_args *args)
 	args->av = av;
 	args->env = env;
 	args->cmd = NULL;
+	args->child_pids = NULL;
 }
 
 int	main(int ac, char **av, char **env)
