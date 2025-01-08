@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 18:03:20 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/07 09:37:53 by kricci-d         ###   ########.fr       */
+/*   Updated: 2025/01/08 09:02:20 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	**parse_arg(t_args *args, char *arg)
 	char	*exec_path;
 	char	**cmd;
 
-	cmd = ft_split(arg, 32);
+	cmd = ft_pipex_split(arg, 32);
 	if (!cmd)
 		exit_handler(args, 12);
 	exec_path = get_exec_path(args->env, cmd[0]);

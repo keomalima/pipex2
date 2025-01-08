@@ -6,19 +6,11 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 18:01:41 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/07 10:16:11 by kricci-d         ###   ########.fr       */
+/*   Updated: 2025/01/08 09:01:23 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
-
-void	initialize_variables(int ac, char **av, char **env, t_args *args)
-{
-	args->cmd_count = ac - 3;
-	args->av = av;
-	args->env = env;
-	args->cmd = NULL;
-}
 
 void	open_pipes(t_args *args, int pipe_fd[2][2])
 {
@@ -38,6 +30,22 @@ void	close_fds(int fd[2][2])
 		close(fd[1][0]);
 	if (fd[1][1] >= 0)
 		close(fd[1][1]);
+}
+
+void	free_nsplit(char **tab, int index)
+{
+	int	i;
+
+	if (!tab)
+		return ;
+	i = 0;
+	while (index > i)
+	{
+		free(tab[i]);
+		tab[i] = NULL;
+		i++;
+	}
+	free(tab);
 }
 
 void	free_split(char **arr)

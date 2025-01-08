@@ -6,11 +6,19 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 11:57:42 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/07 09:35:22 by kricci-d         ###   ########.fr       */
+/*   Updated: 2025/01/08 09:01:35 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
+
+void	initialize_variables(int ac, char **av, char **env, t_args *args)
+{
+	args->cmd_count = ac - 3;
+	args->av = av;
+	args->env = env;
+	args->cmd = NULL;
+}
 
 int	main(int ac, char **av, char **env)
 {
