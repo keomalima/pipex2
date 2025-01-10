@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 11:57:04 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/08 11:00:45 by kricci-d         ###   ########.fr       */
+/*   Updated: 2025/01/10 09:38:29 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_args
 	char	**av;
 	char	**env;
 	char	**cmd;
+	int		pipe_fd[2][2];
 	pid_t	*child_pids;
 }				t_args;
 
@@ -37,8 +38,8 @@ void	pipex(t_args *args);
 char	**ft_pipex_split(char const *s, char c);
 int		pipex_here_doc(t_args *args);
 char	**parse_arg(t_args *args, char *arg);
-void	open_pipes(t_args *args, int pipe_fd[2][2]);
-void	close_fds(int pipe_fd[2][2]);
+void	open_pipes(t_args *args);
+void	close_fds(t_args *args);
 void	free_split(char **arr);
 void	free_nsplit(char **tab, int index);
 void	exit_handler(t_args *args, int err_code);
