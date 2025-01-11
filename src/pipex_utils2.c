@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 10:02:46 by kricci-d          #+#    #+#             */
-/*   Updated: 2025/01/08 10:03:08 by kricci-d         ###   ########.fr       */
+/*   Updated: 2025/01/11 16:01:03 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,25 +70,10 @@ static char	*get_str(const char **s, char c)
 {
 	const char	*start;
 	int			in_quotes;
-	int			str_len;
 
 	in_quotes = 0;
 	while (**s && is_delimiter(**s, c, &in_quotes))
 		(*s)++;
-	start = *s;
-	str_len = 0;
-	in_quotes = 0;
-	while (**s && !is_delimiter(**s, c, &in_quotes))
-	{
-		if (**s != '\'' && **s != '"')
-			str_len++;
-		else if (*(*s + 1) == **s)
-		{
-			str_len++;
-			(*s)++;
-		}
-		(*s)++;
-	}
 	return (extract_str(start, *s));
 }
 

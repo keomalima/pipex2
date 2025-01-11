@@ -3,24 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 18:01:41 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/10 11:36:18 by kricci-d         ###   ########.fr       */
+/*   Updated: 2025/01/11 15:57:29 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex_bonus.h"
 
-void	open_pipes(t_args *args)
+void	close_fd(t_args *args, int *fd)
 {
-	if (pipe(args->pipe_fd[0]) == -1)
-		exit_handler(args, 1);
-	if (pipe(args->pipe_fd[1]) == -1)
-		exit_handler(args, 1);
+	if (*fd >= 0)
+	{
+		if (close(*fd) < 0)
+			exit_handler(args, 1);
+		*fd = -1;
+	}
 }
 
-void	close_fds(t_args *args)
+void	close_all_fds(t_args *args)
 {
 	if (args->pipe_fd[0][0] >= 0)
 		close(args->pipe_fd[0][0]);
@@ -63,7 +65,7 @@ void	free_split(char **arr)
 
 void	exit_handler(t_args *args, int err_code)
 {
-	close_fds(args);
+	close_all_fds(args);
 	if (args->cmd)
 		free_split(args->cmd);
 	if (args->child_pids)
