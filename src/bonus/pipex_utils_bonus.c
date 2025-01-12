@@ -6,7 +6,7 @@
 /*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 18:01:41 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/11 15:57:29 by keomalima        ###   ########.fr       */
+/*   Updated: 2025/01/12 09:44:03 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,15 @@ void	close_fd(t_args *args, int *fd)
 
 void	close_all_fds(t_args *args)
 {
-	if (args->pipe_fd[0][0] >= 0)
-		close(args->pipe_fd[0][0]);
-	if (args->pipe_fd[0][1] >= 0)
-		close(args->pipe_fd[0][1]);
-	if (args->pipe_fd[1][0] >= 0)
-		close(args->pipe_fd[1][0]);
-	if (args->pipe_fd[1][1] >= 0)
-		close(args->pipe_fd[1][1]);
+	int	i;
+
+	i = 0;
+	while (2 > i)
+	{
+		close_fd(args, &args->pipe_fd[i][0]);
+		close_fd(args, &args->pipe_fd[i][1]);
+		i++;
+	}
 }
 
 void	free_nsplit(char **tab, int index)

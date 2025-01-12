@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 11:57:42 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/09 09:30:47 by kricci-d         ###   ########.fr       */
+/*   Updated: 2025/01/12 11:45:39 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,15 @@
 void	initialize_variables(int ac, char **av, char **env, t_args *args)
 {
 	args->cmd_count = ac - 3;
+	args->ac = ac;
 	args->av = av;
 	args->env = env;
 	args->cmd = NULL;
+	args->child_pids = NULL;
+	args->pipe_fd[0][0] = -1;
+	args->pipe_fd[0][1] = -1;
+	args->pipe_fd[1][0] = -1;
+	args->pipe_fd[1][1] = -1;
 }
 
 int	main(int ac, char **av, char **env)

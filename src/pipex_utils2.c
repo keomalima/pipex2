@@ -6,7 +6,7 @@
 /*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 10:02:46 by kricci-d          #+#    #+#             */
-/*   Updated: 2025/01/11 16:01:03 by keomalima        ###   ########.fr       */
+/*   Updated: 2025/01/12 11:43:39 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,10 @@ static char	*get_str(const char **s, char c)
 
 	in_quotes = 0;
 	while (**s && is_delimiter(**s, c, &in_quotes))
+		(*s)++;
+	start = *s;
+	in_quotes = 0;
+	while (**s && !is_delimiter(**s, c, &in_quotes))
 		(*s)++;
 	return (extract_str(start, *s));
 }

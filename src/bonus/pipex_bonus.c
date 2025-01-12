@@ -6,7 +6,7 @@
 /*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 18:06:56 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/11 22:12:19 by keomalima        ###   ########.fr       */
+/*   Updated: 2025/01/12 09:58:28 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	switch_io_n_execve(t_args *args, int i)
 	if (i == 0 || i == args->cmd_count - 1)
 	{
 		if (i == 0 && args->here_doc)
-			args->pipe_fd[(i + 1) % 2][0] = pipex_here_doc(args);
+			pipex_here_doc(args, i);
 		else
 			open_file(args, i);
 	}

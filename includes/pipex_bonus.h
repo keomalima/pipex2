@@ -6,7 +6,7 @@
 /*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 11:57:04 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/11 21:40:26 by keomalima        ###   ########.fr       */
+/*   Updated: 2025/01/12 10:05:46 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <errno.h>
-# include <sys/wait.h>
 # include "../libft/includes/libft.h"
 
 typedef struct s_args
@@ -36,7 +35,7 @@ typedef struct s_args
 
 void	pipex(t_args *args);
 char	**ft_pipex_split(char const *s, char c);
-int		pipex_here_doc(t_args *args);
+void	pipex_here_doc(t_args *args, int i);
 char	**parse_arg(t_args *args, char *arg);
 void	close_all_fds(t_args *args);
 void	close_fd(t_args *args, int *fd);

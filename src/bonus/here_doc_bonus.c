@@ -6,7 +6,7 @@
 /*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 16:34:26 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/11 22:14:04 by keomalima        ###   ########.fr       */
+/*   Updated: 2025/01/12 09:38:03 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,11 @@ void	loop_arg_identifier(t_args *args)
 	ft_printf("heredoc> ");
 }
 
-void	failed_putstr(t_args *args, char *str, int fd[2])
+void	pipex_here_doc(t_args *args, int i)
 {
-	free(str);
-	close(fd[0]);
-	close(fd[1]);
-	exit_handler(args, 1);
-}
-
-int	pipex_here_doc(t_args *args)
-{
-	int		fd[2];
 	char	*str;
 
-	if (pipe(fd) < 0)
+	if (pipe(args->pipe_fd[(i + 1) % 2]) < 0)
 		exit_handler(args, 1);
 	while (1)
 	{
@@ -46,12 +37,13 @@ int	pipex_here_doc(t_args *args)
 		if (ft_strncmp(str, args->av[2], ft_strlen(args->av[2])) == 0)
 		{
 			free(str);
-			break ;
+			return ;
 		}
-		if (ft_putstr_fd(str, fd[1]) < 0)
-			failed_putstr(args, str, fd);
+		if (ft_putstr_fd(str, args->pipe_fd[(i + 1) % 2][1]) < 0)
+		{
+			free(str);
+			exit_handler(args, 1);
+		}
 		free(str);
 	}
-	close(fd[1]);
-	return (fd[0]);
 }
