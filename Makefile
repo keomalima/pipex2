@@ -6,7 +6,7 @@
 #    By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/01 11:56:39 by keomalima         #+#    #+#              #
-#    Updated: 2025/01/13 11:48:25 by kricci-d         ###   ########.fr        #
+#    Updated: 2025/01/13 12:10:04 by kricci-d         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,12 +60,13 @@ HEADERS := includes/pipex.h includes/pipex_bonus.h $(LIBFT_HEADERS)
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	@rm -f
+	$(RM) $(OBJS_BONUS) .bonus
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
 bonus: .bonus
 
 .bonus: $(LIBFT) $(OBJS_BONUS)
+	$(RM) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIBFT) -o $(NAME)
 	@touch .bonus
 
