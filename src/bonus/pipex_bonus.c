@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 18:06:56 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/12 09:58:28 by keomalima        ###   ########.fr       */
+/*   Updated: 2025/01/13 15:03:44 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,19 @@ void	switch_io_n_execve(t_args *args, int i)
 		else
 			open_file(args, i);
 	}
+	args->cmd = parse_arg(args, args->av[i + 2 + args->here_doc]);
 	if (dup2(args->pipe_fd[(i + 1) % 2][0], STDIN_FILENO) < 0)
 		exit_handler(args, 1);
 	if (dup2(args->pipe_fd[i % 2][1], STDOUT_FILENO) < 0)
 		exit_handler(args, 1);
 	close_all_fds(args);
 	if (execve(args->cmd[0], args->cmd, args->env) == -1)
-		exit_handler(args, 1);
+	{
+		if (dup2(2, STDOUT_FILENO) < 0)
+			exit_handler(args, 1);
+		ft_printf("%s: %s\n", strerror(errno), args->cmd[0]);
+		exit_handler(args, 126);
+	}
 }
 
 void	pipex(t_args *args)
@@ -91,10 +97,7 @@ void	pipex(t_args *args)
 		if (args->child_pids[i] < 0)
 			exit_handler(args, -1);
 		if (args->child_pids[i] == 0)
-		{
-			args->cmd = parse_arg(args, args->av[i + 2 + args->here_doc]);
 			switch_io_n_execve(args, i);
-		}
 		close_fd(args, &args->pipe_fd[i % 2][1]);
 		close_fd(args, &args->pipe_fd[(i + 1) % 2][0]);
 		i++;

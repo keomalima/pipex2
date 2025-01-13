@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 18:01:41 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/12 11:44:00 by keomalima        ###   ########.fr       */
+/*   Updated: 2025/01/13 15:02:26 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	exit_handler(t_args *args, int err_code)
 		err_code = 1;
 		errno = 0;
 	}
-	if (err_code == 127)
+	if (err_code == 127 || err_code == 126)
 		errno = 0;
 	if (err_code == 12)
 		errno = ENOMEM;

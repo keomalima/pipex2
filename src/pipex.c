@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 18:06:56 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/13 10:15:52 by kricci-d         ###   ########.fr       */
+/*   Updated: 2025/01/13 15:03:28 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,12 @@ void	switch_io_n_execve(t_args *args, int i)
 		exit_handler(args, 1);
 	close_all_fds(args);
 	if (execve(args->cmd[0], args->cmd, args->env) == -1)
-		exit_handler(args, 1);
+	{
+		if (dup2(2, STDOUT_FILENO) < 0)
+			exit_handler(args, 1);
+		ft_printf("%s: %s\n", strerror(errno), args->cmd[0]);
+		exit_handler(args, 126);
+	}
 }
 
 void	pipex(t_args *args)
