@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+         #
+#    By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/01 11:56:39 by keomalima         #+#    #+#              #
-#    Updated: 2025/01/12 11:40:49 by keomalima        ###   ########.fr        #
+#    Updated: 2025/01/13 09:20:08 by kricci-d         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ BONUSSRCSDIR := src/bonus
 SRCS_BONUS = $(BONUSSRCSDIR)/main_bonus.c $(BONUSSRCSDIR)/pipex_bonus.c $(BONUSSRCSDIR)/pipex_utils_bonus.c \
 		$(BONUSSRCSDIR)/pipex_arg_parse_bonus.c $(BONUSSRCSDIR)/pipex_utils_bonus2.c $(BONUSSRCSDIR)/here_doc_bonus.c
 OBJS_BONUS := $(SRCS_BONUS:$(BONUSSRCSDIR)/%.c=$(OBJDIR)/%.o)
+
 LIBFT_SRCS := $(LIBSRCS)/ft_atoi.c $(LIBSRCS)/ft_bzero.c $(LIBSRCS)/ft_calloc.c \
 			$(LIBSRCS)/ft_isalnum.c $(LIBSRCS)/ft_isalpha.c $(LIBSRCS)/ft_isascii.c \
 			$(LIBSRCS)/ft_isdigit.c $(LIBSRCS)/ft_isprint.c $(LIBSRCS)/ft_memchr.c \
@@ -61,7 +62,7 @@ all: $(NAME)
 $(NAME): $(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
-bonus: $(LIBFT) $(OBJS_BONUS) .bonus
+bonus: .bonus
 
 .bonus: $(LIBFT) $(OBJS_BONUS)
 	$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIBFT) -o $(NAME)

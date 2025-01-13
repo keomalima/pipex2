@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 11:57:04 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/12 11:45:02 by keomalima        ###   ########.fr       */
+/*   Updated: 2025/01/13 07:29:37 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <errno.h>
+# include <sys/wait.h>
 # include "../libft/includes/libft.h"
 
 typedef struct s_args

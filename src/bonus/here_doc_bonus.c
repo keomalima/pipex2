@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 16:34:26 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/12 09:38:03 by keomalima        ###   ########.fr       */
+/*   Updated: 2025/01/13 09:18:32 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,12 @@ void	loop_arg_identifier(t_args *args)
 {
 	int	i;
 
-	i = -1;
-	while (args->cmd_count > ++i)
+	i = 0;
+	while (args->cmd_count - 1 > i)
+	{
 		ft_printf("pipe ");
+		i++;
+	}
 	ft_printf("heredoc> ");
 }
 

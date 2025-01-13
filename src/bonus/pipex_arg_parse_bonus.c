@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_arg_parse_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 18:03:20 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/11 15:36:08 by keomalima        ###   ########.fr       */
+/*   Updated: 2025/01/13 07:57:26 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,18 @@ char	**parse_arg(t_args *args, char *arg)
 	exec_path = get_exec_path(args->env, cmd[0]);
 	if (!exec_path)
 	{
-		ft_printf("Command not found: %s\n", cmd[0]);
-		free_split(cmd);
-		exit_handler(args, 127);
+		if (cmd[0])
+		{
+			ft_printf("command not found: %s\n", cmd[0]);
+			free_split(cmd);
+			exit_handler(args, 127);
+		}
+		else
+		{
+			ft_printf("permission denied: \n");
+			free_split(cmd);
+			exit_handler(args, 126);
+		}
 	}
 	free(cmd[0]);
 	cmd[0] = exec_path;
