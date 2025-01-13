@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 18:03:20 by keomalima         #+#    #+#             */
-/*   Updated: 2025/01/13 08:46:25 by kricci-d         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:51:18 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,30 +85,48 @@ char	*get_exec_path(char **env, char *cmd)
 	return (NULL);
 }
 
+void	error_handler(t_args *args, char **cmd)
+{
+	if (cmd[0] && ft_strncmp(cmd[0], "/", 1) == 0)
+	{
+		ft_printf("%s: %s\n", strerror(errno), cmd[0]);
+		free_split(cmd);
+		exit_handler(args, 127);
+	}
+	else if (cmd[0])
+	{
+		ft_printf("command not found: %s\n", cmd[0]);
+		free_split(cmd);
+		exit_handler(args, 127);
+	}
+	else
+	{
+		ft_printf("permission denied: \n");
+		free_split(cmd);
+		exit_handler(args, 126);
+	}
+}
+
 char	**parse_arg(t_args *args, char *arg)
 {
 	char	*exec_path;
 	char	**cmd;
 
+	exec_path = NULL;
 	cmd = ft_pipex_split(arg, 32);
 	if (!cmd)
 		exit_handler(args, 12);
-	exec_path = get_exec_path(args->env, cmd[0]);
-	if (!exec_path)
+	if (cmd[0])
 	{
-		if (cmd[0])
-		{
-			ft_printf("command not found: %s\n", cmd[0]);
-			free_split(cmd);
-			exit_handler(args, 127);
-		}
+		if (access(cmd[0], X_OK) == 0)
+			exec_path = ft_strdup(cmd[0]);
 		else
-		{
-			ft_printf("permission denied: \n");
-			free_split(cmd);
-			exit_handler(args, 126);
-		}
+			exec_path = get_exec_path(args->env, cmd[0]);
 	}
+	else
+		exec_path = get_exec_path(args->env, cmd[0]);
+	if (!exec_path)
+		error_handler(args, cmd);
 	free(cmd[0]);
 	cmd[0] = exec_path;
 	return (cmd);
